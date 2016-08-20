@@ -3,6 +3,13 @@ var bodyParser = require('body-parser');
 var router = express.Router();
 var models = require('../models');
 
+var sequelizeConnection = models.sequelize;
+
+sequelizeConnection.query('SET FOREIGN_KEY_CHECKS = 0')
+.then(function(){
+	return models.Burger.sync({force:true})
+});
+
 router.get('/', function (req, res) {
 	res.redirect('/burgers');
 });
